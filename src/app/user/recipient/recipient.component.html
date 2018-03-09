@@ -1,0 +1,43 @@
+
+  <div class="row justify-content-center main">
+    <div class="col-md-6 col-sm-8">
+      <div class="text-right add-btn">
+         <button type="button" class="btn btn-link" (click)="newRecipient()">Add recipient</button>
+      </div>
+      <div *ngIf="edit || add">
+        <h4 *ngIf="add">Add new recipient</h4>
+        <h4 *ngIf="edit">Edit recipient</h4>
+        <add-recipient 
+           [vendors]="vendors" 
+           [recipient]="recipient"
+           [flag]="flag" 
+           (save)="saveRecipient($event)" 
+           (cancel)="cancel()">
+        </add-recipient>
+      </div>
+      <hr>
+      <h4>Recipients</h4>
+      <div>
+          <div class="card" *ngFor="let recipient of recipients; let i=index" >
+              <div class="card-block">
+                <h5 class="card-title">{{recipient.name}}</h5>
+                <h6 class="card-title">{{recipient.email}}</h6>
+                <h6 class="card-title">{{recipient.phone}}</h6>
+                <ul>
+                  <li *ngFor="let vendor of recipient.vendors">{{vendor.name}}</li>
+                </ul>
+                <div class="text-right">
+                  <button type="button" class="btn btn-link btn-sm" (click)="editRecipient(recipient.name, recipient.email, recipient.phone, recipient.id, i)">Edit</button>
+                  <button type="button" class="btn btn-link btn-sm" (click)="removeRecipient(recipient.id, i)">Remove</button>
+                </div>
+              </div>
+            </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <modal [modal]="modal" (delete)="agreeToRemove($event)"></modal>
+
+
